@@ -1,0 +1,8 @@
+#SUBSYSTEM=="tty",ATTRS{idVendor}=="10c4",ATTRS{idProduct}=="ea60",ACTION=="add",SYMLINK+="gps",RUN+="/usr/local/bin/gps_logger.pl /dev/$name"
+SUBSYSTEM=="tty",ATTRS{idVendor}=="10c4",ATTRS{idProduct}=="ea60",ACTION=="add",SYMLINK+="gps",MODE="666",RUN+="/bin/sh -c '/usr/local/bin/gps_logger.pl /dev/$name 2>&1 | logger -t gps_logger.pl'"
+
+# Running gpsdctl, somewhat surprisingly, seems to be done for us by the rules in the gpsd package.  However, the daemon seems to run as nobody:root,
+# and the tty is, by default, root:dialout.
+#SUBSYSTEM=="tty",ATTRS{idVendor}=="10c4",ATTRS{idProduct}=="ea60",ACTION=="add",SYMLINK+="gps",MODE="666" # RUN+="/usr/sbin/gpsdctl add /dev/$name"
+
+
